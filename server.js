@@ -2,7 +2,7 @@ var express=require('express');
 var app=express();
 var PORT=process.env.PORT || 3000;
 var products=[{
-	id:1,
+	id:3,
 	name:'Krizma Lawn',
 	description:'This Branded Suit',
 	price:23.0,
@@ -30,6 +30,28 @@ app.get('/',function(req,res){
 
 app.get('/products',function(req,res){
 res.json(products);
+});
+
+//Get :/products/:id
+
+app.get('/products/:id',function(req,res){
+   var productId=parseInt(req.params.id,10);
+   var matchedProduct;
+   products.forEach(function(product){
+   	if(product.id === productId)
+   	{
+
+
+    matchedProduct=product;
+}
+   });
+  if(matchedProduct){
+  	res.json(matchedProduct);
+  }
+  else{
+  	res.status(404).send();
+  }
+
 });
 app.listen(PORT,function(){
 console.log('Express listening on PORT: '+PORT +' !' );
